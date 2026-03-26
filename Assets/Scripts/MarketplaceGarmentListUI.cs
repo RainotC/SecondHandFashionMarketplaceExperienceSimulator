@@ -15,6 +15,8 @@ public class MarketplaceListUI : MonoBehaviour
     {
         if (marketplace != null)
             marketplace.OnMarketplaceUpdated += RefreshUI;
+
+        RefreshUI();
     }
 
     private void OnDisable()
