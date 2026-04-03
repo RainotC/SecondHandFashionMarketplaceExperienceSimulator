@@ -25,7 +25,10 @@ public class MarketplaceGarmentItemUI : MonoBehaviour
 
     public void OnClick()
     {
-        inventory.AddGarment(garment);
-        marketplace.RemoveGarment(garment);
+        if (inventory.AddGarment(garment))
+        {
+            marketplace.RemoveGarment(garment);
+        }
+        //else some info that player doesnt have enough money
     }
 }

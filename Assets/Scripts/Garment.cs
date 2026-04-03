@@ -7,10 +7,11 @@ public class Garment
     public string name;
     public GarmentCondition condition;
     public int price;
+    public int value;
     public GarmentType type;
 
 
-    public Garment(GarmentType? type = null, GarmentCondition? condition = null, Sprite? sprite = null, int? price = null) //If nothing in constructor, assign random values
+    public Garment(GarmentType? type = null, GarmentCondition? condition = null, Sprite? sprite = null, int? value = null, int? price = null) //If nothing in constructor, assign random values
     {
         name = "Garment " + Random.Range(1, 1000); 
         if (type != null)
@@ -40,6 +41,16 @@ public class Garment
             this.condition = (GarmentCondition)Random.Range(0, 3);
         }
 
+        if (value != null)
+        {
+            this.value = (int)value;
+        }
+        else
+        {
+            this.value = GenerateValue();
+        }
+
+
         if (price != null)
         {
             this.price = (int)price;
@@ -51,31 +62,32 @@ public class Garment
     }
 
 
-    int GeneratePrice() //propably should these magic numbers somewhere else, but it is what it is
+    private int GenerateValue() //propably should these magic numbers somewhere else, but it is what it is
     {
-        int basePrice = 0;
         switch (type)
         {
             case GarmentType.Shirt:
-                basePrice = Random.Range(5, 25);
-                break;
+                return Random.Range(5, 25);
             case GarmentType.Pants:
-                basePrice = Random.Range(10, 35);
-                break;
+                return Random.Range(10, 35);
             case GarmentType.Shoes:
-                basePrice = Random.Range(15, 44);
-                break;
+                return Random.Range(15, 44);
+            default:
+                return Random.Range(5, 25);
         }
+    }
+    private int GeneratePrice() {
+        if (value == 0) { value = GenerateValue(); }
         switch (condition)
         {
             case GarmentCondition.Good:
-                return basePrice;
+                return (int)(value * 0.75);
             case GarmentCondition.Worn:
-                return (int)(basePrice * 0.75);
+                return (int)(value * 0.50);
             case GarmentCondition.Bad:
-                return (int)(basePrice * 0.50);
+                return (int)(value * 0.25);
             default:
-                return basePrice;
+                return (int)(value * 0.25);
         }
     }
 }
